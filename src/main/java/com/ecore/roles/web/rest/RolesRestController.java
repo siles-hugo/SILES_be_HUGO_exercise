@@ -34,7 +34,7 @@ public class RolesRestController implements RolesApi {
     }
 
     @Override
-    @PostMapping(
+    @GetMapping(
             produces = {"application/json"})
     public ResponseEntity<List<RoleDto>> getRoles() {
 
@@ -53,7 +53,7 @@ public class RolesRestController implements RolesApi {
     }
 
     @Override
-    @PostMapping(
+    @GetMapping(
             path = "/{roleId}",
             produces = {"application/json"})
     public ResponseEntity<RoleDto> getRole(

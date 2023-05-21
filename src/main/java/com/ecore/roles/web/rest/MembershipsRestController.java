@@ -23,7 +23,7 @@ public class MembershipsRestController implements MembershipsApi {
     private final MembershipsService membershipsService;
 
     @Override
-    @PostMapping(
+    @PutMapping(
             consumes = {"application/json"},
             produces = {"application/json"})
     public ResponseEntity<MembershipDto> assignRoleToMembership(
@@ -35,7 +35,7 @@ public class MembershipsRestController implements MembershipsApi {
     }
 
     @Override
-    @PostMapping(
+    @GetMapping(
             path = "/search",
             produces = {"application/json"})
     public ResponseEntity<List<MembershipDto>> getMemberships(
