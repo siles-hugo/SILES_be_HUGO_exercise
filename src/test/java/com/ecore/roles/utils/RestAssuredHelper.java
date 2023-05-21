@@ -65,7 +65,7 @@ public class RestAssuredHelper {
         return sendRequest(givenNullableBody(MembershipDto.fromModel(membership))
                 .contentType(JSON)
                 .when()
-                .post("/v1/roles/memberships")
+                .put("/v1/roles/memberships")
                 .then());
     }
 
