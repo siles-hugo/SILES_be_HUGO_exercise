@@ -18,7 +18,7 @@ import static com.ecore.roles.web.dto.MembershipDto.fromModel;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/roles/memberships")
+@RequestMapping(value = "/v1/memberships")
 public class MembershipsRestController implements MembershipsApi {
 
     private final MembershipsService membershipsService;
@@ -27,9 +27,9 @@ public class MembershipsRestController implements MembershipsApi {
     @PostMapping(
             consumes = {"application/json"},
             produces = {"application/json"})
-    public ResponseEntity<MembershipDto> createMembershipWithAssignedRole(
+    public ResponseEntity<MembershipDto> createMembership(
             @NotNull @Valid @RequestBody MembershipDto membershipDto) {
-        Membership membership = membershipsService.assignRoleToMembership(membershipDto.toModel());
+        Membership membership = membershipsService.createMembership(membershipDto.toModel());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(fromModel(membership));
@@ -37,10 +37,10 @@ public class MembershipsRestController implements MembershipsApi {
 
     @Override
     @GetMapping(
-            path = "/search",
+            path = "/role/{roleId}",
             produces = {"application/json"})
     public ResponseEntity<List<MembershipDto>> getMemberships(
-            @RequestParam UUID roleId) {
+            @PathVariable UUID roleId) {
 
         List<Membership> memberships = membershipsService.getMemberships(roleId);
 

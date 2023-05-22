@@ -110,7 +110,7 @@
 					"response": []
 				},
 				{
-					"name": "/roles/memberships",
+					"name": "/memberships",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -140,24 +140,12 @@
 					"response": []
 				},
 				{
-					"name": "/roles/memberships/search",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "/memberships/role/{roleId}",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/v1/roles/memberships/search?roleId=1b3c333b-36e7-4b64-aa15-c22ed5908ce4",
+							"raw": "http://localhost:8080/v1/memberships/role/1b3c333b-36e7-4b64-aa15-c22ed5908ce4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -165,15 +153,9 @@
 							"port": "8080",
 							"path": [
 								"v1",
-								"roles",
 								"memberships",
-								"search"
-							],
-							"query": [
-								{
-									"key": "roleId",
-									"value": "1b3c333b-36e7-4b64-aa15-c22ed5908ce4"
-								}
+								"role",
+								"1b3c333b-36e7-4b64-aa15-c22ed5908ce4"
 							]
 						}
 					},
