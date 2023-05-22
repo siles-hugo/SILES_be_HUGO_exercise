@@ -50,7 +50,7 @@ class MembershipsServiceTest {
                 .save(expectedMembership))
                         .thenReturn(expectedMembership);
 
-        Membership actualMembership = membershipsService.assignRoleToMembership(expectedMembership);
+        Membership actualMembership = membershipsService.createMembership(expectedMembership);
 
         assertNotNull(actualMembership);
         assertEquals(actualMembership, expectedMembership);
@@ -60,7 +60,7 @@ class MembershipsServiceTest {
     @Test
     public void shouldFailToCreateMembershipWhenMembershipsIsNull() {
         assertThrows(NullPointerException.class,
-                () -> membershipsService.assignRoleToMembership(null));
+                () -> membershipsService.createMembership(null));
     }
 
     @Test
@@ -71,7 +71,7 @@ class MembershipsServiceTest {
                         .thenReturn(Optional.of(expectedMembership));
 
         ResourceExistsException exception = assertThrows(ResourceExistsException.class,
-                () -> membershipsService.assignRoleToMembership(expectedMembership));
+                () -> membershipsService.createMembership(expectedMembership));
 
         assertEquals("Membership already exists", exception.getMessage());
         verify(roleRepository, times(0)).getById(any());
@@ -85,7 +85,7 @@ class MembershipsServiceTest {
         expectedMembership.setRole(null);
 
         InvalidArgumentException exception = assertThrows(InvalidArgumentException.class,
-                () -> membershipsService.assignRoleToMembership(expectedMembership));
+                () -> membershipsService.createMembership(expectedMembership));
 
         assertEquals("Invalid 'Role' object", exception.getMessage());
         verify(membershipRepository, times(0)).findByUserIdAndTeamId(any(), any());

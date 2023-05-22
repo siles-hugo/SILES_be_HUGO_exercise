@@ -34,7 +34,7 @@ public class MembershipsServiceImpl implements MembershipsService {
     }
 
     @Override
-    public Membership assignRoleToMembership(@NonNull Membership m) {
+    public Membership createMembership(@NonNull Membership m) {
 
         UUID roleId = ofNullable(m.getRole()).map(Role::getId)
                 .orElseThrow(() -> new InvalidArgumentException(Role.class));
