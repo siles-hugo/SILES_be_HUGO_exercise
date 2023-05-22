@@ -31,7 +31,7 @@ public class RolesRestController implements RolesApi {
             @Valid @RequestBody RoleDto role) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(fromModel(rolesService.CreateRole(role.toModel())));
+                .body(fromModel(rolesService.createRole(role.toModel())));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class RolesRestController implements RolesApi {
             produces = {"application/json"})
     public ResponseEntity<List<RoleDto>> getRoles() {
 
-        List<Role> getRoles = rolesService.GetRoles();
+        List<Role> getRoles = rolesService.getRoles();
 
         List<RoleDto> roleDtoList = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class RolesRestController implements RolesApi {
             @PathVariable UUID roleId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(fromModel(rolesService.GetRole(roleId)));
+                .body(fromModel(rolesService.getRole(roleId)));
     }
 
 }
