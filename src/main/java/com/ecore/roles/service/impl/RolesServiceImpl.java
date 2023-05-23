@@ -2,7 +2,7 @@ package com.ecore.roles.service.impl;
 
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.exception.ResourceNotFoundException;
-import com.ecore.roles.model.Role;
+import com.ecore.roles.service.model.Role;
 import com.ecore.roles.repository.RoleRepository;
 import com.ecore.roles.service.RolesService;
 import lombok.NonNull;

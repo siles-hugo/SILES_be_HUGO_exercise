@@ -1,4 +1,4 @@
-package com.ecore.roles.model;
+package com.ecore.roles.service.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

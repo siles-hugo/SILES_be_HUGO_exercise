@@ -2,7 +2,7 @@ package com.ecore.roles.service;
 
 import com.ecore.roles.exception.InvalidArgumentException;
 import com.ecore.roles.exception.ResourceExistsException;
-import com.ecore.roles.model.Membership;
+import com.ecore.roles.service.model.Membership;
 import com.ecore.roles.repository.MembershipRepository;
 import com.ecore.roles.service.impl.MembershipsServiceImpl;
 import org.junit.jupiter.api.Test;

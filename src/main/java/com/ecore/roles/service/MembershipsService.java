@@ -1,7 +1,7 @@
 package com.ecore.roles.service;
 
 import com.ecore.roles.exception.ResourceNotFoundException;
-import com.ecore.roles.model.Membership;
+import com.ecore.roles.service.model.Membership;
 
 import java.util.List;
 import java.util.UUID;

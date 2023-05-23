@@ -1,6 +1,6 @@
 package com.ecore.roles.repository;
 
-import com.ecore.roles.model.Role;
+import com.ecore.roles.service.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
