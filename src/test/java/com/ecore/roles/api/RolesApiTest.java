@@ -148,4 +148,12 @@ class RolesApiTest {
         getRole(GIANNI_USER_UUID, UUID_1)
                 .validate(HttpStatus.NOT_FOUND.value(), format("Team %s not found", UUID_1));
     }
+
+    @Test
+    void shouldFailToGetRoleByUserIdAndTeamIdWhenUserDoesNotBelongToTheTeam() {
+        mockGetTeamById(mockServer, UUID_1, null);
+        getRole(GIANNI_USER_UUID, UUID_1)
+                .validate(HttpStatus.BAD_REQUEST.value(),
+                        "Invalid 'Membership' object. The provided user doesn't belong to the provided team.");
+    }
 }

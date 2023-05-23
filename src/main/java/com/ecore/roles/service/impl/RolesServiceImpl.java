@@ -42,6 +42,11 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
+    public Role getRole(UUID teamId, UUID userId) {
+        return null;
+    }
+
+    @Override
     public List<Role> getRoles() {
         return roleRepository.findAll();
     }
