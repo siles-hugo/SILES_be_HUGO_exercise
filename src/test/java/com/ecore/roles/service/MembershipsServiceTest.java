@@ -4,7 +4,6 @@ import com.ecore.roles.exception.InvalidArgumentException;
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.model.Membership;
 import com.ecore.roles.repository.MembershipRepository;
-import com.ecore.roles.repository.RoleRepository;
 import com.ecore.roles.service.impl.MembershipsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +33,7 @@ class MembershipsServiceTest {
     @Mock
     private MembershipRepository membershipRepository;
     @Mock
-    private RoleRepository roleRepository;
+    private RolesService rolesService;
     @Mock
     private UsersService usersService;
     @Mock
@@ -43,8 +42,8 @@ class MembershipsServiceTest {
     @Test
     void shouldCreateMembership() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        when(roleRepository.findById(expectedMembership.getRole().getId()))
-                .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
+        when(rolesService.getRole(expectedMembership.getRole().getId()))
+                .thenReturn(DEVELOPER_ROLE());
         when(teamsService.getTeam(expectedMembership.getTeamId()))
                 .thenReturn(ORDINARY_CORAL_LYNX_TEAM(true));
         when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
@@ -58,7 +57,7 @@ class MembershipsServiceTest {
 
         assertNotNull(actualMembership);
         assertEquals(actualMembership, expectedMembership);
-        verify(roleRepository).findById(expectedMembership.getRole().getId());
+        verify(rolesService).getRole(expectedMembership.getRole().getId());
     }
 
     @Test
@@ -70,8 +69,8 @@ class MembershipsServiceTest {
     @Test
     void shouldFailToCreateMembershipWhenItExists() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        when(roleRepository.findById(expectedMembership.getRole().getId()))
-                .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
+        when(rolesService.getRole(expectedMembership.getRole().getId()))
+                .thenReturn(DEVELOPER_ROLE());
         when(teamsService.getTeam(expectedMembership.getTeamId()))
                 .thenReturn(ORDINARY_CORAL_LYNX_TEAM(true));
         when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
@@ -83,7 +82,7 @@ class MembershipsServiceTest {
 
         assertEquals("Membership already exists", exception.getMessage());
         verify(teamsService, times(1)).getTeam(any());
-        verify(roleRepository, times(0)).getById(any());
+        verify(rolesService, times(1)).getRole(any());
         verify(usersService, times(0)).getUser(any());
     }
 
@@ -97,7 +96,7 @@ class MembershipsServiceTest {
 
         assertEquals("Invalid 'Role' object", exception.getMessage());
         verify(membershipRepository, times(0)).findByUserIdAndTeamId(any(), any());
-        verify(roleRepository, times(0)).getById(any());
+        verify(rolesService, times(0)).getRole(any());
         verify(usersService, times(0)).getUser(any());
         verify(teamsService, times(0)).getTeam(any());
     }
@@ -107,15 +106,15 @@ class MembershipsServiceTest {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
         expectedMembership.setTeamId(null);
 
-        when(roleRepository.findById(expectedMembership.getRole().getId()))
-                .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
+        when(rolesService.getRole(expectedMembership.getRole().getId()))
+                .thenReturn(DEVELOPER_ROLE());
 
         InvalidArgumentException exception = assertThrows(InvalidArgumentException.class,
                 () -> membershipsService.createMembership(expectedMembership));
 
         assertEquals("Invalid 'Team' object", exception.getMessage());
+        verify(rolesService, times(1)).getRole(any());
         verify(membershipRepository, times(0)).findByUserIdAndTeamId(any(), any());
-        verify(roleRepository, times(0)).getById(any());
         verify(usersService, times(0)).getUser(any());
         verify(teamsService, times(0)).getTeam(any());
     }
@@ -125,15 +124,15 @@ class MembershipsServiceTest {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
         expectedMembership.setUserId(null);
 
-        when(roleRepository.findById(expectedMembership.getRole().getId()))
-                .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
+        when(rolesService.getRole(expectedMembership.getRole().getId()))
+                .thenReturn(DEVELOPER_ROLE());
 
         InvalidArgumentException exception = assertThrows(InvalidArgumentException.class,
                 () -> membershipsService.createMembership(expectedMembership));
 
         assertEquals("Invalid 'User' object", exception.getMessage());
+        verify(rolesService, times(1)).getRole(any());
         verify(membershipRepository, times(0)).findByUserIdAndTeamId(any(), any());
-        verify(roleRepository, times(0)).getById(any());
         verify(usersService, times(0)).getUser(any());
         verify(teamsService, times(0)).getTeam(any());
     }
@@ -142,8 +141,8 @@ class MembershipsServiceTest {
     void shouldFailToCreateMembershipWhenUserDoesNotBelongToTeam() {
         Membership expectedMembership = INVALID_MEMBERSHIP();
 
-        when(roleRepository.findById(expectedMembership.getRole().getId()))
-                .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
+        when(rolesService.getRole(expectedMembership.getRole().getId()))
+                .thenReturn(DEVELOPER_ROLE());
 
         when(teamsService.getTeam(expectedMembership.getTeamId()))
                 .thenReturn(ORDINARY_CORAL_LYNX_TEAM(true));
@@ -153,8 +152,8 @@ class MembershipsServiceTest {
 
         assertEquals("Invalid 'Membership' object. The provided user doesn't belong to the provided team.",
                 exception.getMessage());
+        verify(rolesService, times(1)).getRole(any());
         verify(membershipRepository, times(0)).findByUserIdAndTeamId(any(), any());
-        verify(roleRepository, times(0)).getById(any());
         verify(usersService, times(0)).getUser(any());
     }
 

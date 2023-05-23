@@ -8,8 +8,8 @@ import com.ecore.roles.exception.ResourceNotFoundException;
 import com.ecore.roles.model.Membership;
 import com.ecore.roles.model.Role;
 import com.ecore.roles.repository.MembershipRepository;
-import com.ecore.roles.repository.RoleRepository;
 import com.ecore.roles.service.MembershipsService;
+import com.ecore.roles.service.RolesService;
 import com.ecore.roles.service.TeamsService;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -26,17 +26,17 @@ import static java.util.Optional.ofNullable;
 public class MembershipsServiceImpl implements MembershipsService {
 
     private final MembershipRepository membershipRepository;
-    private final RoleRepository roleRepository;
+    private final RolesService rolesService;
 
     private final TeamsService teamsService;
 
     @Autowired
     public MembershipsServiceImpl(
             MembershipRepository membershipRepository,
-            RoleRepository roleRepository,
+            RolesService rolesService,
             TeamsService teamsService) {
         this.membershipRepository = membershipRepository;
-        this.roleRepository = roleRepository;
+        this.rolesService = rolesService;
         this.teamsService = teamsService;
     }
 
@@ -46,8 +46,7 @@ public class MembershipsServiceImpl implements MembershipsService {
         UUID roleId = ofNullable(m.getRole()).map(Role::getId)
                 .orElseThrow(() -> new InvalidArgumentException(Role.class));
 
-        roleRepository.findById(roleId)
-                .orElseThrow(() -> new ResourceNotFoundException(Role.class, roleId));
+        rolesService.getRole(roleId);
 
         UUID userId = ofNullable(m.getUserId())
                 .orElseThrow(() -> new InvalidArgumentException(User.class));
