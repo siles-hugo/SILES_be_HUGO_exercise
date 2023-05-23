@@ -58,12 +58,12 @@
 					"response": []
 				},
 				{
-					"name": "/role/search",
+					"name": "/roles/team/{teamId}/user/{userId}",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/roles/search?teamMemberId=fd282131-d8aa-4819-b0c8-d9e0bfb1b75c&teamId=7676a4bf-adfe-415c-941b-1739af07039b",
+							"raw": "http://localhost:8080/v1/roles/team/fd282131-d8aa-4819-b0c8-d9e0bfb1b75c/user/7676a4bf-adfe-415c-941b-1739af07039b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -72,17 +72,10 @@
 							"path": [
 								"v1",
 								"roles",
-								"search"
-							],
-							"query": [
-								{
-									"key": "teamMemberId",
-									"value": "fd282131-d8aa-4819-b0c8-d9e0bfb1b75c"
-								},
-								{
-									"key": "teamId",
-									"value": "7676a4bf-adfe-415c-941b-1739af07039b"
-								}
+								"team",
+								"fd282131-d8aa-4819-b0c8-d9e0bfb1b75c",
+								"user",
+								"7676a4bf-adfe-415c-941b-1739af07039b"
 							]
 						}
 					},
