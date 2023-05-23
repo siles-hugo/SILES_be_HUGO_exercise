@@ -2,8 +2,8 @@ package com.ecore.roles.utils;
 
 import com.ecore.roles.client.model.Team;
 import com.ecore.roles.client.model.User;
-import com.ecore.roles.model.Membership;
-import com.ecore.roles.model.Role;
+import com.ecore.roles.service.model.Membership;
+import com.ecore.roles.service.model.Role;
 import org.assertj.core.util.Lists;
 
 import java.util.UUID;

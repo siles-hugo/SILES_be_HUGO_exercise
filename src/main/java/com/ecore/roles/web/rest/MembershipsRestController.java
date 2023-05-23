@@ -1,6 +1,6 @@
 package com.ecore.roles.web.rest;
 
-import com.ecore.roles.model.Membership;
+import com.ecore.roles.service.model.Membership;
 import com.ecore.roles.service.MembershipsService;
 import com.ecore.roles.web.MembershipsApi;
 import com.ecore.roles.web.dto.MembershipDto;

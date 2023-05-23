@@ -1,7 +1,7 @@
 package com.ecore.roles.utils;
 
-import com.ecore.roles.model.Membership;
-import com.ecore.roles.model.Role;
+import com.ecore.roles.service.model.Membership;
+import com.ecore.roles.service.model.Role;
 import com.ecore.roles.web.dto.MembershipDto;
 import com.ecore.roles.web.dto.RoleDto;
 import io.restassured.RestAssured;

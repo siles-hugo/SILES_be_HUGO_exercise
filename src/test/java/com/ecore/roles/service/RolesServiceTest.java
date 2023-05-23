@@ -1,7 +1,7 @@
 package com.ecore.roles.service;
 
 import com.ecore.roles.exception.ResourceNotFoundException;
-import com.ecore.roles.model.Role;
+import com.ecore.roles.service.model.Role;
 import com.ecore.roles.repository.MembershipRepository;
 import com.ecore.roles.repository.RoleRepository;
 import com.ecore.roles.service.impl.RolesServiceImpl;
