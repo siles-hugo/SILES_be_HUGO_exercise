@@ -14,4 +14,3 @@ public interface MembershipsService {
 
     List<Membership> getMemberships(UUID roleId);
 }
-

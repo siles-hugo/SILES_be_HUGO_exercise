@@ -120,7 +120,8 @@ class MembershipsApiTests {
         mockGetTeamById(mockServer, expectedMembership.getTeamId(), null);
 
         createMembership(expectedMembership)
-                .validate(HttpStatus.NOT_FOUND.value(), format("Team %s not found", expectedMembership.getTeamId()));
+                .validate(HttpStatus.NOT_FOUND.value(),
+                        format("Team %s not found", expectedMembership.getTeamId()));
     }
 
     @Test

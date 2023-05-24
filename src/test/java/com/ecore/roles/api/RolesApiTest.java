@@ -54,7 +54,7 @@ class RolesApiTest {
         sendRequest(when()
                 .get("/v1/role")
                 .then())
-                    .validate(HttpStatus.NOT_FOUND.value(), "Not Found");
+                        .validate(HttpStatus.NOT_FOUND.value(), "Not Found");
     }
 
     @Test
