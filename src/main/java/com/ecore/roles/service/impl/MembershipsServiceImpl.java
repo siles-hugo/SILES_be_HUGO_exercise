@@ -76,7 +76,10 @@ public class MembershipsServiceImpl implements MembershipsService {
     }
 
     @Override
-    public Membership getMemberships(UUID teamId, UUID userId) {
-        return null;
+    public Membership getMembership(@NonNull UUID teamId, @NonNull UUID userId) {
+        return membershipRepository.findByUserIdAndTeamId(userId, teamId)
+                .orElseThrow(() -> new ResourceNotFoundException(Membership.class,
+                        String.format("Invalid userId (%s) and teamId (%s) combination.",
+                                userId, teamId)));
     }
 }
