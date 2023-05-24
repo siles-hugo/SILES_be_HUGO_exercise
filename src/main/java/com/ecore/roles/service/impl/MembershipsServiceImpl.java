@@ -57,7 +57,7 @@ public class MembershipsServiceImpl implements MembershipsService {
         Team team = ofNullable(teamsService.getTeam(teamId))
                 .orElseThrow(() -> new ResourceNotFoundException(Team.class, teamId));
 
-        if (!userBelongsToTeam(userId, team)) {
+        if (!team.userBelongsToTeam(userId)) {
             throw new InvalidArgumentException(Membership.class,
                     "The provided user doesn't belong to the provided team.");
         }
@@ -70,19 +70,13 @@ public class MembershipsServiceImpl implements MembershipsService {
         return membershipRepository.save(m);
     }
 
-    private boolean userBelongsToTeam(UUID userId, Team team) {
-
-        boolean userIsTeamLead = userId.equals(team.getTeamLeadId());
-
-        boolean userBelongsToMembers = team.getTeamMemberIds()
-                .stream()
-                .anyMatch(userId::equals);
-
-        return userIsTeamLead || userBelongsToMembers;
-    }
-
     @Override
     public List<Membership> getMemberships(@NonNull UUID rid) {
         return membershipRepository.findByRoleId(rid);
+    }
+
+    @Override
+    public Membership getMemberships(UUID teamId, UUID userId) {
+        return null;
     }
 }

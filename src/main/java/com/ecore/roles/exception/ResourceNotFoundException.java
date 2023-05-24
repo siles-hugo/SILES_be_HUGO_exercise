@@ -9,4 +9,8 @@ public class ResourceNotFoundException extends RuntimeException {
     public <T> ResourceNotFoundException(Class<T> resource, UUID id) {
         super(format("%s %s not found", resource.getSimpleName(), id));
     }
+
+    public <T> ResourceNotFoundException(Class<T> resource, String message) {
+        super(format("Resource %s not found. %s", resource.getSimpleName(), message));
+    }
 }

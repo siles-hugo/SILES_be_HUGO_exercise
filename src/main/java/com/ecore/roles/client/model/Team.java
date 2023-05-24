@@ -32,4 +32,12 @@ public class Team {
 
     @JsonProperty
     private List<UUID> teamMemberIds;
+
+    public boolean userBelongsToTeam(UUID userId) {
+
+        boolean userIsTeamLead = userId.equals(this.teamLeadId);
+        boolean userBelongsToMembers = this.teamMemberIds.contains(userId);
+
+        return userIsTeamLead || userBelongsToMembers;
+    }
 }
