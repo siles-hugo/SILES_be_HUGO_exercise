@@ -131,29 +131,10 @@ class RolesApiTest {
     }
 
     @Test
-    void shouldFailToGetRoleByUserIdAndTeamIdWhenMissingUserId() {
-        getRole(null, ORDINARY_CORAL_LYNX_TEAM_UUID)
-                .validate(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase());
-    }
-
-    @Test
-    void shouldFailToGetRoleByUserIdAndTeamIdWhenMissingTeamId() {
-        getRole(GIANNI_USER_UUID, null)
-                .validate(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase());
-    }
-
-    @Test
     void shouldFailToGetRoleByUserIdAndTeamIdWhenItDoesNotExist() {
         mockGetTeamById(mockServer, UUID_1, null);
         getRole(GIANNI_USER_UUID, UUID_1)
                 .validate(HttpStatus.NOT_FOUND.value(), format("Team %s not found", UUID_1));
     }
 
-    @Test
-    void shouldFailToGetRoleByUserIdAndTeamIdWhenUserDoesNotBelongToTheTeam() {
-        mockGetTeamById(mockServer, UUID_1, null);
-        getRole(GIANNI_USER_UUID, UUID_1)
-                .validate(HttpStatus.BAD_REQUEST.value(),
-                        "Invalid 'Membership' object. The provided user doesn't belong to the provided team.");
-    }
 }

@@ -10,7 +10,7 @@ public interface MembershipsService {
 
     Membership createMembership(Membership membership) throws ResourceNotFoundException;
 
-    Membership getMemberships(UUID teamId, UUID userId);
+    Membership getMembership(UUID teamId, UUID userId);
 
     List<Membership> getMemberships(UUID roleId);
 }

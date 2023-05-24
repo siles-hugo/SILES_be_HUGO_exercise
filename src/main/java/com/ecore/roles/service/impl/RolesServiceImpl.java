@@ -60,11 +60,7 @@ public class RolesServiceImpl implements RolesService {
         Team team = ofNullable(teamsService.getTeam(teamId))
                 .orElseThrow(() -> new ResourceNotFoundException(Team.class, teamId));
 
-        Membership membership = ofNullable(membershipsService.getMemberships(team.getId(), userId))
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        Role.class,
-                        String.format("Invalid userId (%s) and teamId (%s) combination.",
-                                userId, teamId)));
+        Membership membership = membershipsService.getMembership(team.getId(), userId);
 
         return getRole(membership.getRole().getId());
     }

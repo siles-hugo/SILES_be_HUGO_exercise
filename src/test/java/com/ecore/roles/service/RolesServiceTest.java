@@ -81,7 +81,7 @@ class RolesServiceTest {
 
         when(teamsService.getTeam(ORDINARY_CORAL_LYNX_TEAM_UUID))
                 .thenReturn(ORDINARY_CORAL_LYNX_TEAM(true));
-        when(membershipsService.getMemberships(ORDINARY_CORAL_LYNX_TEAM_UUID, GIANNI_USER_UUID))
+        when(membershipsService.getMembership(ORDINARY_CORAL_LYNX_TEAM_UUID, GIANNI_USER_UUID))
                 .thenReturn(defaultMembership);
         when(roleRepository.findById(defaultMembership.getRole().getId()))
                 .thenReturn(Optional.of(expectedRole));
@@ -104,7 +104,7 @@ class RolesServiceTest {
                 exception.getMessage());
 
         verify(teamsService, times(1)).getTeam(any());
-        verify(membershipsService, times(0)).getMemberships(any(), any());
+        verify(membershipsService, times(0)).getMembership(any(), any());
         verify(roleRepository, times(0)).findAllById(any());
     }
 
@@ -112,18 +112,16 @@ class RolesServiceTest {
     void shouldFailToGetRoleByTeamIdAndUserIdIfTheMembershipDoesNotExists() {
         when(teamsService.getTeam(ORDINARY_CORAL_LYNX_TEAM_UUID))
                 .thenReturn(ORDINARY_CORAL_LYNX_TEAM(true));
-        when(membershipsService.getMemberships(ORDINARY_CORAL_LYNX_TEAM_UUID, GIANNI_USER_UUID))
-                .thenReturn(null);
+        when(membershipsService.getMembership(ORDINARY_CORAL_LYNX_TEAM_UUID, GIANNI_USER_UUID))
+                .thenThrow(new ResourceNotFoundException(Membership.class, "Test error message"));
 
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
                 () -> rolesService.getRole(ORDINARY_CORAL_LYNX_TEAM_UUID, GIANNI_USER_UUID));
 
-        assertEquals("Resource Role not found. Invalid userId (fd282131-d8aa-4819-b0c8-d9e0bfb1b75c) " +
-                        "and teamId (7676a4bf-adfe-415c-941b-1739af07039b) combination.",
-                exception.getMessage());
+        assertEquals("Resource Membership not found. Test error message", exception.getMessage());
 
         verify(teamsService, times(1)).getTeam(any());
-        verify(membershipsService, times(1)).getMemberships(any(), any());
+        verify(membershipsService, times(1)).getMembership(any(), any());
         verify(roleRepository, times(0)).findAllById(any());
 
     }
