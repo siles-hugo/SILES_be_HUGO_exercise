@@ -1,10 +1,11 @@
 package com.ecore.roles.web.rest;
 
-import com.ecore.roles.model.Membership;
+import com.ecore.roles.service.model.Membership;
 import com.ecore.roles.service.MembershipsService;
 import com.ecore.roles.web.MembershipsApi;
 import com.ecore.roles.web.dto.MembershipDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -17,7 +18,7 @@ import static com.ecore.roles.web.dto.MembershipDto.fromModel;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/roles/memberships")
+@RequestMapping(value = "/v1/memberships")
 public class MembershipsRestController implements MembershipsApi {
 
     private final MembershipsService membershipsService;
@@ -26,20 +27,20 @@ public class MembershipsRestController implements MembershipsApi {
     @PostMapping(
             consumes = {"application/json"},
             produces = {"application/json"})
-    public ResponseEntity<MembershipDto> assignRoleToMembership(
+    public ResponseEntity<MembershipDto> createMembership(
             @NotNull @Valid @RequestBody MembershipDto membershipDto) {
-        Membership membership = membershipsService.assignRoleToMembership(membershipDto.toModel());
+        Membership membership = membershipsService.createMembership(membershipDto.toModel());
         return ResponseEntity
-                .status(200)
+                .status(HttpStatus.CREATED)
                 .body(fromModel(membership));
     }
 
     @Override
-    @PostMapping(
-            path = "/search",
+    @GetMapping(
+            path = "/role/{roleId}",
             produces = {"application/json"})
     public ResponseEntity<List<MembershipDto>> getMemberships(
-            @RequestParam UUID roleId) {
+            @PathVariable UUID roleId) {
 
         List<Membership> memberships = membershipsService.getMemberships(roleId);
 
@@ -51,7 +52,7 @@ public class MembershipsRestController implements MembershipsApi {
         }
 
         return ResponseEntity
-                .status(200)
+                .status(HttpStatus.OK)
                 .body(newMembershipDto);
     }
 

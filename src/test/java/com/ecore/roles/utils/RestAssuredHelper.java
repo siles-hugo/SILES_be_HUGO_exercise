@@ -1,7 +1,7 @@
 package com.ecore.roles.utils;
 
-import com.ecore.roles.model.Membership;
-import com.ecore.roles.model.Role;
+import com.ecore.roles.service.model.Membership;
+import com.ecore.roles.service.model.Role;
 import com.ecore.roles.web.dto.MembershipDto;
 import com.ecore.roles.web.dto.RoleDto;
 import io.restassured.RestAssured;
@@ -54,10 +54,10 @@ public class RestAssuredHelper {
 
     public static EcoreValidatableResponse getRole(UUID userId, UUID teamId) {
         return sendRequest(given()
-                .queryParam("teamMemberId", userId)
-                .queryParam("teamId", teamId)
+                .pathParam("teamId", teamId)
+                .pathParam("userId", userId)
                 .when()
-                .get("/v1/roles/search")
+                .get("/v1/roles/team/{teamId}/user/{userId}")
                 .then());
     }
 
@@ -65,15 +65,15 @@ public class RestAssuredHelper {
         return sendRequest(givenNullableBody(MembershipDto.fromModel(membership))
                 .contentType(JSON)
                 .when()
-                .post("/v1/roles/memberships")
+                .post("/v1/memberships")
                 .then());
     }
 
     public static EcoreValidatableResponse getMemberships(UUID roleId) {
         return sendRequest(given()
-                .queryParam("roleId", roleId)
+                .pathParam("roleId", roleId)
                 .when()
-                .get("/v1/roles/memberships/search")
+                .get("/v1/memberships/role/{roleId}")
                 .then());
     }
 
